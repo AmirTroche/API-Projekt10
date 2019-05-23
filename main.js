@@ -18,11 +18,12 @@ new Vue({
     methods: { 
     addBucketlist(){
         this.bucketlist.push({title: this.newBucket, id:this.bucketlist.length})
-        /*rensar skriv fältet*/
+        /*rensar user input field */
         this.newBucket = " ";
-        
+        /*sparar user input, i local storage så den inte försvinner när man updaterar hemsidan */
         localStorage.setItem(STORAGE_KEY,JSON.stringify(this.bucketlist));
     },
+        /*tar bort ett valt item i listan*/
         removeBucket(bucket){
             this.bucketlist.splice(this.bucketlist.indexOf(bucket), 1);
             localStorage.setItem(STORAGE_KEY,JSON.stringify(this.bucketlist));

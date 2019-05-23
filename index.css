@@ -29,7 +29,7 @@ body {
 	min-width: 230px;
 	max-width: 550px;
 	margin: 0 auto;
-	-webkit-font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased; /*The font-smooth CSS property controls the application of anti-aliasing when fonts are rendered */
 	-moz-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 	font-weight: 300;
@@ -74,7 +74,7 @@ body {
 	font-weight: 100;
 	text-align: center;
 	color: rgba(175, 47, 47, 0.15);
-	-webkit-text-rendering: optimizeLegibility;
+	-webkit-text-rendering: optimizeLegibility; /* The text-rendering CSS property provides information to the rendering engine about what to optimize for when rendering text. */
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
 }
@@ -132,8 +132,8 @@ body {
 
 
 .bucket-list li label {
-	white-space: pre-line;
-	word-break: break-all;
+	white-space: pre-line; /*Demonstrate different values of the white-space property*/
+	word-break: break-all; /*Break words at any character:*/
 	padding: 15px 60px 15px 15px;
 	margin-left: 45px;
 	display: block;
