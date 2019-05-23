@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>BucketList</title>
+		
+		<link rel="stylesheet" href="index.css">
+		<script src="https://unpkg.com/vue"></script>
+	</head>
+	<body>
+		<section class="bucketapp">
+			<header class="header">
+				<h1>Bucket List</h1>
+                <!-- V-model bindar data-->
+                <!-- V-on bindar event till input-->
+				<input class="new-Bucketlist" 
+                       v-model="newBucket"
+                       v-on:keyup.enter="addBucketlist"
+                       placeholder="Vart vill du resa?" autofocus>
+			</header>
+            <!-- 1 gör om sektionen nedan till en komponent
+            2 gör en y komponent som visar bucket list destination
+            3 gör routes som leder till dem olika komponenterna-->
+			<section class="main">
+                <ul class="bucket-list">
+                    <!-- för varje bucket inne i bucketlist ska vi lista det-->
+                    <li v-for="bucket in bucketlist" class="bucket">
+                        <div class="view">
+                        <label>{{ bucket.title}}</label>
+                        <button class="destroy" v-on:click="removeBucket(bucket)"></button>
+                        </div>
+                    
+                    </li>
+                </ul>
+				<ul class="bucket-list"></ul>
+			</section>
+		</section>
+		<footer class="info">
+			<p>Made by Amir and Sabit</p>
+		</footer>
+
+		<script src="main.js"></script>
+	</body>
+</html>
