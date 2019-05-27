@@ -17,7 +17,7 @@
 				<header class="header">
 					<h1>Bucket List</h1>
 					<input class="new-Bucketlist" v-model="newBucket" v-on:keyup.enter="addBucketlist();search()"
-						placeholder="Vart vill du resa?" autofocus>   
+						placeholder="Vart vill du resa?" autofocus>
 				</header>
 
 				<section class="main" v-show="bucketlist.length">
@@ -35,12 +35,12 @@
 		</center>
 
 		</section> -->
-		
+
 		<!--
 		Lite kommentarer under "app", eftersom jag  inte kommentera innuti kodenen utan att de krockade på något sätt:
 		Autofocus = Vue funktion, när hemsidan laddas så får det elementet fokus, i detta fall där användaren matar in data.
 		"destroy" = när man klickar på x triggar den igång eventet removeBucket, som tar bort ett item ur listan. Den tar även bort från LocalStorage om du kollar consolelog -> application
-		
+
 		-->
 		<center>
 			<router-view></router-view>
