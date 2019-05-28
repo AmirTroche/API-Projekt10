@@ -45,6 +45,7 @@ const search = Vue.component('search', {
                     data.map((urls) => {
                         this.images.push(urls.urls.small);
                     });
+                    this.newBucket = " ";
                 })
         },
         listClicked(val) {
