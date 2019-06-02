@@ -8,12 +8,15 @@ const search = Vue.component('search', {
             newBucket: "",
             bucketlist: [],
             imagesTag: "",
+            weatherapi: "9c8c299e51194d4fccc96d74b9ee514d",
+            weather: {},
+            weatherData: null
         }
     },
     created() {
         this.bucketlist = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); //.prase = "analyserar" en json sträng. I detta fall hämtar den item från LocalStorage
     },
-	//pushar in ny element i listan
+    //pushar in ny element i listan
     methods: {
         addBucketlist() {
             this.bucketlist.push({
@@ -23,11 +26,12 @@ const search = Vue.component('search', {
 
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bucketlist)); // vet inte hur jag ska förklara denna, 
         },
-		//funktionen nedanför tar bort item samt bilder 
+        //funktionen nedanför tar bort item samt bilder 
         removeBucket(bucket) {
-            console.log(bucket.title, this.imagesTag);
+            // console.log(bucket.title, this.imagesTag);
             if (bucket.title === this.imagesTag) {
                 this.images = [];
+                this.weather = {};
             }
             this.bucketlist.splice(this.bucketlist.indexOf(bucket), 1);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bucketlist));
@@ -39,32 +43,55 @@ const search = Vue.component('search', {
             this.imagesTag = this.newBucket;
             axios
                 .get(
-                    'https://api.unsplash.com/search/photos?client_id=' + this.authKey + '&per_page=4&query=' + this.newBucket
+                    'https://api.unsplash.com/search/photos?client_id=' + this.authKey + '&per_page=6&query=' + this.newBucket
                 ).then(data => {
                     var data = data.data.results;
                     data.map((urls) => {
                         this.images.push(urls.urls.small);
                     });
-                    this.newBucket = " ";
+
+                }).then(() => {
+                    axios
+                        .get(
+                            'https://api.openweathermap.org/data/2.5/weather?q=' + this.newBucket + '&units=metric&appid=' + this.weatherapi
+                        ).then((data) => {
+                            // console.log(data.data)
+                            this.weather = data.data;
+                            this.weatherData = true;
+                        }).catch((error) => {
+                            // console.log(error)
+                            this.weatherData = false;
+                        })
+                    this.newBucket = "";
                 })
         },
         listClicked(val) {
             this.newBucket = val;
             this.search();
-        }
+        },
     },
     mounted() {
         this.images = [];
         axios
-            .get(
-                'https://api.unsplash.com/search/photos?client_id=' + this.authKey + '&per_page=6&query=' + this.$route.params.newBucket
-            ).then(data => {
+            .get('https://api.unsplash.com/search/photos?client_id=' + this.authKey + '&per_page=6&query=' + this.$route.params.newBucket)
+            .then(data => {
                 var data = data.data.results;
                 data.map((urls) => {
                     this.images.push(urls.urls.small);
-                });
+                })
+                this.imagesTag = this.$route.params.newBucket;
+            }).then(() => {
+                axios
+                    .get('https://api.openweathermap.org/data/2.5/weather?q=' + this.$route.params.newBucket + '&units=metric&appid=' + this.weatherapi)
+                    .then((data) => {
+                        // console.log(data.data)
+                        this.weather = data.data;
+                        this.weatherData = true;
+                    }).catch((error) => {
+                        // console.log(error)
+                        this.weatherData = false;
+                    })
             });
-        this.imagesTag = this.$route.params.newBucket;
     },
     template: `<div>
                     <section class="bucketapp">
@@ -86,6 +113,41 @@ const search = Vue.component('search', {
                             </ul>
                             <ul class="bucket-list"></ul>
                         </section>
+                        
+                    </section>
+                    <section class="bucketapp" style="margin-top:20px;" v-if="weatherData">
+                            <header class="header">
+                                <img :src="'http://openweathermap.org/img/w/' + weather.weather[0].icon + '.png'">
+                            </header>
+                            <section class="main">
+                                <ul class="bucket-list">
+                                    <li class="bucket">
+                                        <div class="view">
+                                        <p>Weather: {{weather.weather[0].main}}</p>
+                                        </div>
+                                    </li>
+                                    <li class="bucket">
+                                        <div class="view">
+                                        <p>Description: {{weather.weather[0].description}}</p>
+                                        </div>
+                                    </li>
+                                    <li class="bucket">
+                                        <div class="view">
+                                        <p>Max Temp: {{weather.main.temp_max}}</p>
+                                        </div>
+                                    </li>
+                                    <li class="bucket">
+                                        <div class="view">
+                                        <p>Min Temp: {{weather.main.temp_min}}</p>
+                                        </div>
+                                    </li>
+                                    <li class="bucket">
+                                        <div class="view">
+                                        <p>Humidity: {{weather.main.humidity}}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </section>
                     </section>
                     <div style="width: 90%;">
                         <div class="thumbnail" v-for="url in images">
@@ -152,7 +214,7 @@ const home = Vue.component('home', {
 					<ul class="bucket-list"></ul>
                 </section>
             </section>`
-}) 
+})
 
 //En vue funktion för Routes (vägar,paths)
 const routes = [{

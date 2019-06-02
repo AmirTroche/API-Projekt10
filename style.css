@@ -129,9 +129,6 @@ body {
 	border-bottom: 1px solid #ededed;
 }
 
-.bucket-list li:last-child {
-	border-bottom: none;
-}
 
 
 .bucket-list li label {
