@@ -1,11 +1,10 @@
-//Axios is a popular, promise-based HTTP client that sports an easy-to-use API and can be used in both the browser and Node.js.
 const STORAGE_KEY = 'bucket-storage';
 const search = Vue.component('search', {
     data: function () {
         return {
             authKey: "eaf010cce85c4bb288517e3b87388e2f08c34be83383273a4be5e2d6c82e8a21", //Unsplash användes istället för Instagram.
             images: [],
-            newBucket: "",
+            newBucket: "", //
             bucketlist: [],
             imagesTag: "",
             weatherapi: "9c8c299e51194d4fccc96d74b9ee514d",
@@ -24,20 +23,21 @@ const search = Vue.component('search', {
                 id: this.bucketlist.length
             })
 
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bucketlist)); // vet inte hur jag ska förklara denna, 
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bucketlist)); // vet inte hur jag ska förklara denna,
         },
-        //funktionen nedanför tar bort item samt bilder 
+        //funktionen nedanför tar bort item samt bilder
         removeBucket(bucket) {
             // console.log(bucket.title, this.imagesTag);
             if (bucket.title === this.imagesTag) {
                 this.images = [];
                 this.weather = {};
+				this.weatherData = null;
             }
             this.bucketlist.splice(this.bucketlist.indexOf(bucket), 1);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bucketlist));
 
         },
-        // Funktion för att söka från Unsplash, hämtar de 
+        // Funktion för att söka från Unsplash, hämtar de
         search() {
             this.images = [];
             this.imagesTag = this.newBucket;
@@ -65,7 +65,7 @@ const search = Vue.component('search', {
                     this.newBucket = "";
                 })
         },
-        listClicked(val) {
+        listClicked(val) { 
             this.newBucket = val;
             this.search();
         },
@@ -113,7 +113,7 @@ const search = Vue.component('search', {
                             </ul>
                             <ul class="bucket-list"></ul>
                         </section>
-                        
+
                     </section>
                     <section class="bucketapp" style="margin-top:20px;" v-if="weatherData">
                             <header class="header">
@@ -156,12 +156,12 @@ const search = Vue.component('search', {
                     </div>
                 </div>`
 });
-/*Template förklaring: 
+/*Template förklaring:
 V-model = use the v-model directive to create two-way data bindings on form input, textarea, and select elements
 V-On = Lyssnar direkt på events som triggar igång JS. Här så tar den bort item från lista
 V-for =  för att göra en lista över objekt baserat på en array(listan i detta fall)
 */
-const home = Vue.component('home', {
+const home = Vue.component('home', { //home =
     data: function () {
         return {
             newBucket: "",
@@ -189,7 +189,7 @@ const home = Vue.component('home', {
         search() {
             this.$router.push('/search/' + this.newBucket);
         },
-        listClicked(val) {
+        listClicked(val) { //när man klickar i listan över sökta resor
             this.newBucket = val;
             this.search();
         }
@@ -197,7 +197,7 @@ const home = Vue.component('home', {
     template: `<section class="bucketapp">
 				<header class="header">
 					<h1>Bucket List</h1>
-					<input class="new-Bucketlist" v-model="newBucket" v-on:keyup.enter="addBucketlist();search()" 
+					<input class="new-Bucketlist" v-model="newBucket" v-on:keyup.enter="addBucketlist();search()"
 						placeholder="Vart vill du resa?" autofocus>
 				</header>
 
@@ -216,7 +216,7 @@ const home = Vue.component('home', {
             </section>`
 })
 
-//En vue funktion för Routes (vägar,paths)
+//En vue funktion för Routes (vägar,paths),
 const routes = [{
         path: '/search/:newBucket',
         component: search

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<div id="app">
+	<div id="app"> 
 		<!-- <center>
 			<section class="bucketapp">
 				<header class="header">
@@ -40,10 +40,9 @@
 		Lite kommentarer under "app", eftersom jag  inte kommentera innuti kodenen utan att de krockade på något sätt:
 		Autofocus = Vue funktion, när hemsidan laddas så får det elementet fokus, i detta fall där användaren matar in data.
 		"destroy" = när man klickar på x triggar den igång eventet removeBucket, som tar bort ett item ur listan. Den tar även bort från LocalStorage om du kollar consolelog -> application
-
 		-->
 		<center>
-			<router-view></router-view>
+			<router-view></router-view> <!-- är en funktionell komponent som gör den matchade komponenten för den angivna sökvägen -->
 		</center>
 		<footer class="info">
 			<p>Projectgroup 10</p>

@@ -35,7 +35,6 @@ body {
 	font-weight: 300;
 }
 
-
 .hidden {
 	display: none;
 }
@@ -115,8 +114,6 @@ body {
 	border-top: 1px solid #e6e6e6;
 }
 
-
-
 .bucket-list {
 	margin: 0;
 	padding: 0;
@@ -128,8 +125,6 @@ body {
 	font-size: 24px;
 	border-bottom: 1px solid #ededed;
 }
-
-
 
 .bucket-list li label {
 	white-space: pre-line;
