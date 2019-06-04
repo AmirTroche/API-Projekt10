@@ -37,13 +37,13 @@ const search = Vue.component('search', {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bucketlist));
 
         },
-        // Funktion för att söka från Unsplash, hämtar de
+        // Funktion för att söka från Unsplash, hämtar x antal bilder
         search() {
             this.images = [];
             this.imagesTag = this.newBucket;
             axios
                 .get(
-                    'https://api.unsplash.com/search/photos?client_id=' + this.authKey + '&per_page=6&query=' + this.newBucket
+                    'https://api.unsplash.com/search/photos?client_id=' + this.authKey + '&per_page=6&query = unsplash api för att hämta 6 senaste bilderna' + this.newBucket //&per_page=6&query = unsplash api för att hämta 6 senaste bilderna
                 ).then(data => {
                     var data = data.data.results;
                     data.map((urls) => {
@@ -70,7 +70,7 @@ const search = Vue.component('search', {
             this.search();
         },
     },
-    mounted() {
+    mounted() { //mounted = typ en vue funktion för att "montera" saker, i detta fall monteras Unsplash api + nyckel och OpenWeather api + nyckel
         this.images = [];
         axios
             .get('https://api.unsplash.com/search/photos?client_id=' + this.authKey + '&per_page=6&query=' + this.$route.params.newBucket)
@@ -161,7 +161,7 @@ V-model = use the v-model directive to create two-way data bindings on form inpu
 V-On = Lyssnar direkt på events som triggar igång JS. Här så tar den bort item från lista
 V-for =  för att göra en lista över objekt baserat på en array(listan i detta fall)
 */
-const home = Vue.component('home', { //home =
+const home = Vue.component('home', { //home = en av två huvudkomponenter, detta fall läggs det till i en lista (array) av user input
     data: function () {
         return {
             newBucket: "",
@@ -185,7 +185,7 @@ const home = Vue.component('home', { //home =
             this.bucketlist.splice(this.bucketlist.indexOf(bucket), 1);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.bucketlist));
         },
-        // Funktion till att söka från Unsplash
+        // Search = andra huvudkomponenten
         search() {
             this.$router.push('/search/' + this.newBucket);
         },
@@ -216,7 +216,8 @@ const home = Vue.component('home', { //home =
             </section>`
 })
 
-//En vue funktion för Routes (vägar,paths),
+/*En vue funktion för Routes (vägar,paths), med andra ord är det den delen som synkroniserar  aktuella innehållet i webbläsarens adressfält
+med andra ord, den del som  gör att URL adressen ändras när du klickar på något*/
 const routes = [{
         path: '/search/:newBucket',
         component: search
